@@ -1,9 +1,9 @@
 site_name: KRoute
 site_description: Lightweight, pure Kotlin HTTP routing library.
-site_url: https://catbit.github.io/kroute/
+site_url: https://rodrigoferreira001.github.io/KRoute/
 
-repo_name: catbit/kroute
-repo_url: https://github.com/catbit/kroute
+repo_name: RodrigoFerreira001/KRoute
+repo_url: https://github.com/RodrigoFerreira001/KRoute
 edit_uri: edit/main/docs/
 
 theme:
@@ -68,4 +68,4 @@ nav:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/catbit/kroute
+      link: https://github.com/RodrigoFerreira001/KRoute

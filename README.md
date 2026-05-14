@@ -9,8 +9,8 @@
 <p align="center">
   <a href="https://search.maven.org/search?q=g:dev.catbit+a:kroute"><img src="https://img.shields.io/maven-central/v/dev.catbit/kroute?label=Maven%20Central&color=2A6DB2" alt="Maven Central"></a>
   <a href="https://kotlinlang.org"><img src="https://img.shields.io/badge/Kotlin-2.x-7F52FF?logo=kotlin&logoColor=white" alt="Kotlin"></a>
-  <a href="https://github.com/catbit/kroute/actions"><img src="https://img.shields.io/github/actions/workflow/status/catbit/kroute/build.yml?label=Build" alt="Build"></a>
-  <a href="https://github.com/catbit/kroute/blob/main/LICENSE"><img src="https://img.shields.io/github/license/catbit/kroute" alt="License"></a>
+  <a href="https://github.com/RodrigoFerreira001/KRoute/actions"><img src="https://img.shields.io/github/actions/workflow/status/RodrigoFerreira001/KRoute/build.yml?label=Build" alt="Build"></a>
+  <a href="https://github.com/RodrigoFerreira001/KRoute/blob/main/LICENSE"><img src="https://img.shields.io/github/license/RodrigoFerreira001/KRoute" alt="License"></a>
 </p>
 
 <br>
