@@ -1,0 +1,71 @@
+site_name: KRoute
+site_description: Lightweight, pure Kotlin HTTP routing library.
+site_url: https://catbit.github.io/kroute/
+
+repo_name: catbit/kroute
+repo_url: https://github.com/catbit/kroute
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  logo: media/logo.png
+  favicon: media/logo.png
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - content.code.copy
+    - content.code.annotate
+    - content.action.edit
+    - search.highlight
+    - search.suggest
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - attr_list
+  - md_in_html
+
+nav:
+  - Home: index.md
+  - Getting Started: getting_started.md
+  - Core:
+    - Routing: routing.md
+    - Middleware: middleware.md
+    - Request & Response: request_response.md
+  - Extensions:
+    - Google Cloud Functions: google_cloud.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/catbit/kroute
