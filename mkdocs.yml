@@ -8,8 +8,8 @@ edit_uri: edit/main/docs/
 
 theme:
   name: material
-  logo: media/logo.png
-  favicon: media/logo.png
+  logo: media/kroute-white.svg
+  favicon: media/kroute-color.svg
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default

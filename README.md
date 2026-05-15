@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/media/logo.png" alt="KRoute" width="300">
+  <img src="docs/media/kroute-color.svg" alt="KRoute" width="300">
 </p>
 
 <p align="center">
