@@ -6,13 +6,15 @@
 }
 
 /* Header gradient */
-.md-header {
-  background: linear-gradient(90deg, var(--kroute-teal), var(--kroute-purple));
+.md-header,
+[data-md-color-primary="custom"] .md-header {
+  background: linear-gradient(90deg, var(--kroute-teal), var(--kroute-purple)) !important;
 }
 
 /* Tabs bar */
-.md-tabs {
-  background: linear-gradient(90deg, var(--kroute-teal), var(--kroute-purple));
+.md-tabs,
+[data-md-color-primary="custom"] .md-tabs {
+  background: linear-gradient(90deg, var(--kroute-teal), var(--kroute-purple)) !important;
 }
 
 /* Accent color (links, hover, active nav items) */
