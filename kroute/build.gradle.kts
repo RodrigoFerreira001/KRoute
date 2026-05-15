@@ -3,9 +3,6 @@ plugins {
     alias(libs.plugins.vanniktech.mavenPublish)
 }
 
-group = "dev.catbit"
-version = "1.0-SNAPSHOT"
-
 repositories {
     mavenCentral()
 }
@@ -29,7 +26,7 @@ mavenPublishing {
     coordinates(
         groupId = "dev.catbit",
         artifactId = "kroute",
-        version = "1.0.0"
+        version = "1.0.1"
     )
 
     pom {

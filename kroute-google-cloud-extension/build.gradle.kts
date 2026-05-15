@@ -3,9 +3,6 @@ plugins {
     alias(libs.plugins.vanniktech.mavenPublish)
 }
 
-group = "dev.catbit"
-version = "1.0.0"
-
 repositories {
     mavenCentral()
 }
