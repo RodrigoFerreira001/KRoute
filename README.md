@@ -11,6 +11,7 @@
   <a href="https://kotlinlang.org"><img src="https://img.shields.io/badge/Kotlin-2.x-7F52FF?logo=kotlin&logoColor=white" alt="Kotlin"></a>
   <a href="https://github.com/RodrigoFerreira001/KRoute/actions"><img src="https://img.shields.io/github/actions/workflow/status/RodrigoFerreira001/KRoute/build.yml?label=Build" alt="Build"></a>
   <a href="https://github.com/RodrigoFerreira001/KRoute/blob/main/LICENSE"><img src="https://img.shields.io/github/license/RodrigoFerreira001/KRoute" alt="License"></a>
+  <a href="https://rodrigoferreira001.github.io/KRoute/"><img src="https://img.shields.io/badge/Docs-GitHub%20Pages-blue" alt="Docs"></a>
 </p>
 
 <br>
@@ -89,7 +90,7 @@ object GetUserFunction : HttpFunction(
 // 2. Create the router
 val router = HttpFunctionRouter(
     functions = listOf(GetUsersFunction, GetUserFunction),
-    preRoutingMiddlewares = listOf(CORSMiddleware)
+    preRoutingMiddlewares = listOf(CORSMiddleware())
 )
 
 // 3. Route a request
@@ -133,7 +134,7 @@ val router = HttpFunctionRouter(
         CreateUserFunction,
         DeleteUserFunction
     ),
-    preRoutingMiddlewares = listOf(CORSMiddleware),   // run before matching
+    preRoutingMiddlewares = listOf(CORSMiddleware()),   // run before matching
     defaultMiddlewares = listOf(AuthMiddleware),       // run after matching, before every function
     onError = { throwable -> logger.error(throwable) }
 )
@@ -189,14 +190,36 @@ val RequireAdminMiddleware = object : HttpFunctionMiddleware {
 
 #### Built-in Middlewares
 
-KRoute ships with `CORSMiddleware` out of the box. It adds `Access-Control-Allow-Origin: *` to all responses and handles `OPTIONS` preflight automatically:
+KRoute ships with `CORSMiddleware` out of the box. It adds CORS headers to all responses and handles `OPTIONS` preflight automatically.
+
+Default — allows all origins:
 
 ```kotlin
-val router = HttpFunctionRouter(
+HttpFunctionRouter(
     functions = listOf(...),
-    preRoutingMiddlewares = listOf(CORSMiddleware)
+    preRoutingMiddlewares = listOf(CORSMiddleware())
 )
 ```
+
+Configurable via `CorsOptions`:
+
+```kotlin
+CORSMiddleware(
+    CorsOptions(
+        origin = CorsOrigin.Single("https://myapp.com"),
+        credentials = true,
+        maxAge = 3600
+    )
+)
+```
+
+| `CorsOrigin` | Behavior |
+|---|---|
+| `CorsOrigin.Any` | `Access-Control-Allow-Origin: *` (default) |
+| `CorsOrigin.None` | Header not set |
+| `CorsOrigin.Single("https://example.com")` | Fixed origin + `Vary: Origin` |
+| `CorsOrigin.Multiple(listOf(...))` | Reflects request origin if it matches the list |
+| `CorsOrigin.Predicate { origin -> ... }` | Reflects request origin if predicate returns `true` |
 
 ### Path Patterns
 
@@ -293,7 +316,7 @@ class MyApi : HttpFunction {
             CreateUserFunction,
             DeleteUserFunction
         ),
-        preRoutingMiddlewares = listOf(CORSMiddleware),
+        preRoutingMiddlewares = listOf(CORSMiddleware()),
         defaultMiddlewares = listOf(AuthMiddleware),
         onError = { e -> System.getLogger("MyApi").log(System.Logger.Level.ERROR, e) }
     )

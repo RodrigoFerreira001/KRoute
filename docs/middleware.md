@@ -121,28 +121,88 @@ object AdminOnlyFunction : HttpFunction(
 
 Adds CORS headers to all responses and handles `OPTIONS` preflight requests automatically.
 
+#### Default usage
+
+Allows all origins with standard methods — equivalent to Express's `cors()` with no arguments:
+
 ```kotlin
 HttpFunctionRouter(
     functions = listOf(...),
-    preRoutingMiddlewares = listOf(CORSMiddleware)
+    preRoutingMiddlewares = listOf(CORSMiddleware())
 )
 ```
 
-**Headers set on every response:**
+#### Configuration
 
-| Header | Value |
+Pass a `CorsOptions` instance to customize behavior:
+
+```kotlin
+CORSMiddleware(
+    CorsOptions(
+        origin = CorsOrigin.Single("https://myapp.com"),
+        methods = listOf(HttpMethod.Get, HttpMethod.Post),
+        allowedHeaders = listOf("Content-Type", "Authorization"),
+        exposedHeaders = listOf("X-Custom-Header"),
+        credentials = true,
+        maxAge = 3600,
+        optionsSuccessStatus = HttpStatusCode.NoContent
+    )
+)
+```
+
+#### `CorsOptions` reference
+
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `origin` | `CorsOrigin` | `CorsOrigin.Any` | Controls `Access-Control-Allow-Origin` |
+| `methods` | `List<HttpMethod>` | GET, HEAD, PUT, PATCH, POST, DELETE | Controls `Access-Control-Allow-Methods` |
+| `allowedHeaders` | `List<String>?` | `null` | Controls `Access-Control-Allow-Headers`. When `null`, reflects the request's `Access-Control-Request-Headers` |
+| `exposedHeaders` | `List<String>` | `[]` | Controls `Access-Control-Expose-Headers` |
+| `credentials` | `Boolean` | `false` | Sets `Access-Control-Allow-Credentials: true` |
+| `maxAge` | `Int?` | `null` | Sets `Access-Control-Max-Age` in seconds |
+| `optionsSuccessStatus` | `HttpStatusCode` | `204 No Content` | Status code returned for preflight responses |
+
+#### `CorsOrigin` variants
+
+| Variant | Behavior |
 |---|---|
-| `Access-Control-Allow-Origin` | `*` |
+| `CorsOrigin.Any` | Sets `Access-Control-Allow-Origin: *` |
+| `CorsOrigin.None` | Does not set the header |
+| `CorsOrigin.Single("https://example.com")` | Sets the given origin and adds `Vary: Origin` |
+| `CorsOrigin.Multiple(listOf(...))` | Reflects the request origin if it matches the list |
+| `CorsOrigin.Predicate { origin -> ... }` | Reflects the request origin if the predicate returns `true` |
 
-**Additional headers on `OPTIONS` preflight:**
+#### Examples
 
-| Header | Value |
-|---|---|
-| `Access-Control-Allow-Methods` | `*` |
-| `Access-Control-Allow-Headers` | `*` |
-| `Access-Control-Max-Age` | `86400` |
+**Allow a specific origin:**
+```kotlin
+CORSMiddleware(CorsOptions(origin = CorsOrigin.Single("https://myapp.com")))
+```
 
-Preflight requests are terminated with `204 No Content`.
+**Allow multiple origins:**
+```kotlin
+CORSMiddleware(CorsOptions(
+    origin = CorsOrigin.Multiple(listOf("https://myapp.com", "https://staging.myapp.com"))
+))
+```
+
+**Dynamic origin with predicate:**
+```kotlin
+CORSMiddleware(CorsOptions(
+    origin = CorsOrigin.Predicate { origin -> origin?.endsWith(".myapp.com") == true }
+))
+```
+
+**With credentials:**
+```kotlin
+CORSMiddleware(CorsOptions(
+    origin = CorsOrigin.Single("https://myapp.com"),
+    credentials = true
+))
+```
 
 !!! tip
     Register `CORSMiddleware` in `preRoutingMiddlewares` so it runs before authentication and other middleware that might halt the pipeline.
+
+!!! warning
+    `CorsOrigin.Any` (`*`) cannot be combined with `credentials = true`. Browsers will reject the response. Use `CorsOrigin.Single` or `CorsOrigin.Predicate` when credentials are required.
