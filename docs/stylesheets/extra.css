@@ -1,0 +1,47 @@
+/* KRoute brand colors: #00C9A7 (teal) → #845EC2 (purple) */
+
+:root {
+  --kroute-teal: #00C9A7;
+  --kroute-purple: #845EC2;
+}
+
+/* Header gradient */
+.md-header {
+  background: linear-gradient(90deg, var(--kroute-teal), var(--kroute-purple));
+}
+
+/* Tabs bar */
+.md-tabs {
+  background: linear-gradient(90deg, var(--kroute-teal), var(--kroute-purple));
+}
+
+/* Accent color (links, hover, active nav items) */
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #00C9A7;
+  --md-primary-fg-color--light: #33d4b7;
+  --md-primary-fg-color--dark: #00a889;
+  --md-accent-fg-color: #845EC2;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #00C9A7;
+  --md-primary-fg-color--light: #33d4b7;
+  --md-primary-fg-color--dark: #00a889;
+  --md-accent-fg-color: #845EC2;
+}
+
+/* Active navigation item */
+.md-nav__item--active > .md-nav__link {
+  color: var(--kroute-purple);
+}
+
+/* Code highlight color */
+.md-typeset .highlight .hll {
+  background-color: rgba(0, 201, 167, 0.15);
+}
+
+/* Search highlight */
+.md-search-result mark {
+  color: var(--kroute-purple);
+  background-color: rgba(132, 94, 194, 0.15);
+}
