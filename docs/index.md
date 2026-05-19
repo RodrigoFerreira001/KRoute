@@ -14,7 +14,7 @@ Add the dependency:
 
 ```kotlin title="build.gradle.kts"
 dependencies {
-    implementation("dev.catbit:kroute:1.0.0")
+    implementation("dev.catbit:kroute:1.0.2")
 }
 ```
 
