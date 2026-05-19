@@ -6,8 +6,8 @@ The `kroute-google-cloud-extension` module provides adapters that bridge KRoute'
 
 ```kotlin title="build.gradle.kts"
 dependencies {
-    implementation("dev.catbit:kroute:1.0.0")
-    implementation("dev.catbit:kroute-google-cloud-extension:1.0.0")
+    implementation("dev.catbit:kroute:1.0.2")
+    implementation("dev.catbit:kroute-google-cloud-extension:1.0.2")
 }
 ```
 
