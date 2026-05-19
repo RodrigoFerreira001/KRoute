@@ -7,7 +7,7 @@
     **`gradle/libs.versions.toml`**
     ```toml
     [versions]
-    kroute = "1.0.0"
+    kroute = "1.0.2"
 
     [libraries]
     kroute = { module = "dev.catbit:kroute", version.ref = "kroute" }
@@ -26,7 +26,7 @@
 
     ```kotlin
     dependencies {
-        implementation("dev.catbit:kroute:1.0.0")
+        implementation("dev.catbit:kroute:1.0.2")
         implementation("dev.catbit:kroute-google-cloud-extension:1.0.0") // optional
     }
     ```
