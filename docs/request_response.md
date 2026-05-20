@@ -72,6 +72,17 @@ Middlewares can add headers to the request using `withHeader`. This returns a ne
 return proceed(request.withHeader("userId", userId))
 ```
 
+To add multiple headers at once, use `withHeaders`:
+
+```kotlin
+return proceed(
+    request.withHeaders(
+        "userId" to userId,
+        "userRole" to role
+    )
+)
+```
+
 The enriched request is passed to subsequent middlewares and to `handleRequest`.
 
 ## HttpResponse

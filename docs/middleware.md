@@ -40,11 +40,11 @@ val AuthMiddleware = object : HttpFunctionMiddleware {
 }
 ```
 
-1. `withHeader` returns a new `HttpRequest` with the additional header — the original is not mutated.
+1. `withHeader` returns a new `HttpRequest` with the additional header — the original is not mutated. Use `withHeaders` to add multiple headers at once.
 
 ## Chaining data between middlewares
 
-Use `withHeader` to pass data from one middleware to the next without mutating the original request:
+Use `withHeader` (or `withHeaders` for multiple values) to pass data from one middleware to the next without mutating the original request:
 
 ```kotlin
 // Middleware A — validates token, passes userId forward

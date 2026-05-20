@@ -33,7 +33,7 @@ Add the dependency using Gradle version catalog:
 **`gradle/libs.versions.toml`**
 ```toml
 [versions]
-kroute = "1.0.2"
+kroute = "1.0.3"
 
 [libraries]
 kroute = { module = "dev.catbit:kroute", version.ref = "kroute" }
@@ -55,8 +55,8 @@ Or with direct coordinates:
 
 ```kotlin
 dependencies {
-    implementation("dev.catbit:kroute:1.0.2")
-    implementation("dev.catbit:kroute-google-cloud-extension:1.0.2") // optional
+    implementation("dev.catbit:kroute:1.0.3")
+    implementation("dev.catbit:kroute-google-cloud-extension:1.0.3") // optional
 }
 ```
 
@@ -280,6 +280,17 @@ Use `withHeader` to pass data between middlewares without mutating the original 
 return proceed(request.withHeader("userId", userId))
 ```
 
+To add multiple headers at once, use `withHeaders`:
+
+```kotlin
+return proceed(
+    request.withHeaders(
+        "userId" to userId,
+        "userRole" to role
+    )
+)
+```
+
 ---
 
 ## Google Cloud Functions
@@ -290,8 +301,8 @@ The `kroute-google-cloud-extension` module provides adapters that bridge KRoute'
 
 ```kotlin
 dependencies {
-    implementation("dev.catbit:kroute:1.0.2")
-    implementation("dev.catbit:kroute-google-cloud-extension:1.0.2")
+    implementation("dev.catbit:kroute:1.0.3")
+    implementation("dev.catbit:kroute-google-cloud-extension:1.0.3")
 }
 ```
 
