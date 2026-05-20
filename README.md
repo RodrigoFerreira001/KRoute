@@ -33,7 +33,7 @@ Add the dependency using Gradle version catalog:
 **`gradle/libs.versions.toml`**
 ```toml
 [versions]
-kroute = "1.0.0"
+kroute = "1.0.2"
 
 [libraries]
 kroute = { module = "dev.catbit:kroute", version.ref = "kroute" }
@@ -55,8 +55,8 @@ Or with direct coordinates:
 
 ```kotlin
 dependencies {
-    implementation("dev.catbit:kroute:1.0.0")
-    implementation("dev.catbit:kroute-google-cloud-extension:1.0.0") // optional
+    implementation("dev.catbit:kroute:1.0.2")
+    implementation("dev.catbit:kroute-google-cloud-extension:1.0.2") // optional
 }
 ```
 
@@ -290,8 +290,8 @@ The `kroute-google-cloud-extension` module provides adapters that bridge KRoute'
 
 ```kotlin
 dependencies {
-    implementation("dev.catbit:kroute:1.0.0")
-    implementation("dev.catbit:kroute-google-cloud-extension:1.0.0")
+    implementation("dev.catbit:kroute:1.0.2")
+    implementation("dev.catbit:kroute-google-cloud-extension:1.0.2")
 }
 ```
 

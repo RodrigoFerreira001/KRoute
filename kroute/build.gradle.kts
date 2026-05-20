@@ -26,7 +26,7 @@ mavenPublishing {
     coordinates(
         groupId = "dev.catbit",
         artifactId = "kroute",
-        version = "1.0.2"
+        version = libs.versions.kroute.get()
     )
 
     pom {
