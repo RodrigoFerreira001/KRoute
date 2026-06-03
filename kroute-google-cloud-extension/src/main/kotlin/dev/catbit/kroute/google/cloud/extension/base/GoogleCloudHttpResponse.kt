@@ -1,5 +1,6 @@
 package dev.catbit.kroute.google.cloud.extension.base
 
+import dev.catbit.kroute.base.HttpContentType
 import dev.catbit.kroute.base.HttpResponse
 import dev.catbit.kroute.base.HttpStatusCode
 import com.google.cloud.functions.HttpResponse as GCPHttpResponse
@@ -22,6 +23,10 @@ class GoogleCloudHttpResponse(
 
     override fun setContentType(contentType: String) {
         gcpResponse.setContentType(contentType)
+    }
+
+    override fun setContentType(contentType: HttpContentType) {
+        gcpResponse.setContentType(contentType.value)
     }
 
     override fun appendHeader(header: String, value: String) {

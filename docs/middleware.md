@@ -65,7 +65,7 @@ val LoadUserMiddleware = object : HttpFunctionMiddleware {
         request: HttpRequest,
         response: HttpResponse
     ): HttpRequest {
-        val userId by request.headerDelegate() // reads "userId" header
+        val userId by request.headerValue() // reads "userId" header
         val role = userRepository.getRole(userId)
         return proceed(request.withHeader("userRole", role))
     }
@@ -205,4 +205,4 @@ CORSMiddleware(CorsOptions(
     Register `CORSMiddleware` in `preRoutingMiddlewares` so it runs before authentication and other middleware that might halt the pipeline.
 
 !!! warning
-    `CorsOrigin.Any` (`*`) cannot be combined with `credentials = true`. Browsers will reject the response. Use `CorsOrigin.Single` or `CorsOrigin.Predicate` when credentials are required.
+    `CorsOrigin.Any` (`*`) cannot be combined with `credentials = true`. This is enforced at construction time — `CorsOptions` will throw `IllegalArgumentException` if both are set. Use `CorsOrigin.Single` or `CorsOrigin.Predicate` when credentials are required.

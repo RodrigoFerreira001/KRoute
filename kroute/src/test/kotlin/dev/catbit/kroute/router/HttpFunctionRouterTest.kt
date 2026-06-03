@@ -31,6 +31,7 @@ class HttpFunctionRouterTest {
         override fun setStatusCode(code: Int, message: String) { lastStatusCode = HttpStatusCode(code, message) }
         override fun setStatusCode(statusCode: HttpStatusCode) { lastStatusCode = statusCode }
         override fun setContentType(contentType: String) {}
+        override fun setContentType(contentType: HttpContentType) {}
         override fun appendHeader(header: String, value: String) {}
         override fun headers() = mutableMapOf<String, MutableList<String>>()
         override fun setBody(stringData: String) {}

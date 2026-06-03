@@ -3,14 +3,11 @@ package dev.catbit.kroute.delegates
 import kotlin.reflect.KProperty
 
 class HeaderDelegate(
-    private val headers: Map<String, List<String>>,
-    private val setNameToLowerCase: Boolean = true
+    private val headers: Map<String, List<String>>
 )  {
     operator fun getValue(thisRef: Any?, property: KProperty<*>): String {
-        val name = if (setNameToLowerCase) {
-            property.name.lowercase()
-        } else property.name
-
-        return headers.getValue(name).first()
+        return headers.entries.first {
+            it.key.equals(property.name, ignoreCase = true)
+        }.value.first()
     }
 }

@@ -26,7 +26,7 @@ object GetUserFunction : HttpFunction(
     httpMethod = HttpMethod.Get
 ) {
     override fun handleRequest(request: HttpRequest, response: HttpResponse) {
-        val id by request.pathDelegate(this)
+        val id by request.pathValue(this)
         response.setBody("""{"id": "$id"}""")
         response.setStatusCode(HttpStatusCode.OK)
     }

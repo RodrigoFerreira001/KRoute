@@ -1,5 +1,6 @@
 package dev.catbit.kroute.middleware.commons
 
+import dev.catbit.kroute.base.HttpHeaders
 import dev.catbit.kroute.base.HttpMethod
 import dev.catbit.kroute.base.HttpRequest
 import dev.catbit.kroute.base.HttpResponse
@@ -15,57 +16,57 @@ class CORSMiddleware(
         request: HttpRequest,
         response: HttpResponse
     ): HttpRequest {
-        val requestOrigin = request.headerOrNull("origin")
+        val requestOrigin = request.headerOrNull(HttpHeaders.Origin)
 
         // Access-Control-Allow-Origin
         when (val o = options.origin) {
-            is CorsOrigin.Any -> response.appendHeader("Access-Control-Allow-Origin", "*")
+            is CorsOrigin.Any -> response.appendHeader(HttpHeaders.AccessControlAllowOrigin, "*")
             is CorsOrigin.None -> Unit
             is CorsOrigin.Single -> {
-                response.appendHeader("Access-Control-Allow-Origin", o.origin)
-                response.appendHeader("Vary", "Origin")
+                response.appendHeader(HttpHeaders.AccessControlAllowOrigin, o.origin)
+                response.appendHeader(HttpHeaders.Vary, HttpHeaders.Origin)
             }
 
             is CorsOrigin.Multiple -> {
                 if (requestOrigin != null && o.origins.contains(requestOrigin)) {
-                    response.appendHeader("Access-Control-Allow-Origin", requestOrigin)
-                    response.appendHeader("Vary", "Origin")
+                    response.appendHeader(HttpHeaders.AccessControlAllowOrigin, requestOrigin)
+                    response.appendHeader(HttpHeaders.Vary, HttpHeaders.Origin)
                 }
             }
 
             is CorsOrigin.Predicate -> {
                 if (o.check(requestOrigin)) {
                     val value = requestOrigin ?: "*"
-                    response.appendHeader("Access-Control-Allow-Origin", value)
-                    if (requestOrigin != null) response.appendHeader("Vary", "Origin")
+                    response.appendHeader(HttpHeaders.AccessControlAllowOrigin, value)
+                    if (requestOrigin != null) response.appendHeader(HttpHeaders.Vary, HttpHeaders.Origin)
                 }
             }
         }
 
         // Access-Control-Allow-Credentials
         if (options.credentials) {
-            response.appendHeader("Access-Control-Allow-Credentials", "true")
+            response.appendHeader(HttpHeaders.AccessControlAllowCredentials, "true")
         }
 
         // Access-Control-Expose-Headers
         if (options.exposedHeaders.isNotEmpty()) {
-            response.appendHeader("Access-Control-Expose-Headers", options.exposedHeaders.joinToString(", "))
+            response.appendHeader(HttpHeaders.AccessControlExposeHeaders, options.exposedHeaders.joinToString(", "))
         }
 
         // Preflight
         if (request.method() == HttpMethod.Options.value) {
-            response.appendHeader("Access-Control-Allow-Methods", options.methods.joinToString(", "))
+            response.appendHeader(HttpHeaders.AccessControlAllowMethods, options.methods.joinToString(", ") { it.value })
 
             val allowed = options.allowedHeaders
-                ?: request.headerOrNull("access-control-request-headers")?.split(",")?.map { it.trim() }
+                ?: request.headerOrNull(HttpHeaders.AccessControlRequestHeaders)?.split(",")?.map { it.trim() }
                 ?: emptyList()
 
             if (allowed.isNotEmpty()) {
-                response.appendHeader("Access-Control-Allow-Headers", allowed.joinToString(", "))
+                response.appendHeader(HttpHeaders.AccessControlAllowHeaders, allowed.joinToString(", "))
             }
 
             if (options.maxAge != null) {
-                response.appendHeader("Access-Control-Max-Age", options.maxAge.toString())
+                response.appendHeader(HttpHeaders.AccessControlMaxAge, options.maxAge.toString())
             }
 
             halt(options.optionsSuccessStatus)
@@ -108,4 +109,10 @@ data class CorsOptions(
     val credentials: Boolean = false,
     val maxAge: Int? = null,
     val optionsSuccessStatus: HttpStatusCode = HttpStatusCode.NoContent
-)
+) {
+    init {
+        require(!(credentials && origin is CorsOrigin.Any)) {
+            "credentials=true cannot be used with CorsOrigin.Any — browsers reject wildcard origin with credentials"
+        }
+    }
+}

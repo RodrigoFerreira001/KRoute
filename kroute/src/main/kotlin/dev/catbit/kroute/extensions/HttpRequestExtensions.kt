@@ -7,9 +7,11 @@ import dev.catbit.kroute.delegates.NullablePathDelegate
 import dev.catbit.kroute.delegates.PathDelegate
 import dev.catbit.kroute.function.HttpFunction
 
-fun HttpRequest.header(headerName: String): String = headers().getValue(headerName).first()
+fun HttpRequest.header(headerName: String): String =
+    headers().entries.first { it.key.equals(headerName, ignoreCase = true) }.value.first()
 
-fun HttpRequest.headerOrNull(headerName: String): String? = headers()[headerName]?.firstOrNull()
+fun HttpRequest.headerOrNull(headerName: String): String? =
+    headers().entries.firstOrNull { it.key.equals(headerName, ignoreCase = true) }?.value?.firstOrNull()
 
 fun HttpRequest.withHeader(key: String, value: String): HttpRequest {
     val updatedHeaders = headers() + mapOf(key to listOf(value))
@@ -25,18 +27,14 @@ fun HttpRequest.withHeaders(vararg pairs: Pair<String, String>): HttpRequest {
     }
 }
 
-fun HttpRequest.nullableHeaderDelegate(
-    setNameToLowerCase: Boolean = true
-) = NullableHeaderDelegate(headers(), setNameToLowerCase)
+fun HttpRequest.nullableHeaderValue() = NullableHeaderDelegate(headers())
 
-fun HttpRequest.headerDelegate(
-    setNameToLowerCase: Boolean = true
-) = HeaderDelegate(headers(), setNameToLowerCase)
+fun HttpRequest.headerValue() = HeaderDelegate(headers())
 
-fun HttpRequest.pathDelegate(
+fun HttpRequest.pathValue(
     function: HttpFunction
 ) = PathDelegate(function, this)
 
-fun HttpRequest.nullablePathDelegate(
+fun HttpRequest.nullablePathValue(
     function: HttpFunction
 ) = NullablePathDelegate(function, this)

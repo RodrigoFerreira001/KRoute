@@ -31,9 +31,16 @@ interface HttpResponse {
     /**
      * Sets the "Content-Type" header for the response.
      *
-     * @param contentType The media type (e.g., "application/json", "text/html").
+     * @param contentType The media type string (e.g., "application/json", "text/html").
      */
     fun setContentType(contentType: String)
+
+    /**
+     * Sets the "Content-Type" header for the response using an [HttpContentType] instance.
+     *
+     * @param contentType The content type to set (e.g., [HttpContentType.Application.Json]).
+     */
+    fun setContentType(contentType: HttpContentType)
 
     /**
      * Appends a value to an HTTP header. If the header already exists, the new value
