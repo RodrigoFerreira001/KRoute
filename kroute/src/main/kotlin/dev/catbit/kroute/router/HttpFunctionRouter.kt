@@ -3,6 +3,7 @@ package dev.catbit.kroute.router
 import dev.catbit.kroute.base.HttpRequest
 import dev.catbit.kroute.base.HttpResponse
 import dev.catbit.kroute.base.HttpStatusCode
+import dev.catbit.kroute.base.HttpStatusCode.Companion.isSuccess
 import dev.catbit.kroute.function.HttpFunction
 import dev.catbit.kroute.middleware.HttpFunctionMiddleware
 import dev.catbit.kroute.middleware.HttpFunctionMiddlewareException
@@ -45,7 +46,7 @@ class HttpFunctionRouter(
                 }
             }
         } catch (e: HttpFunctionMiddlewareException) {
-            onError(e)
+            if (!e.statusCode.isSuccess()) onError(e)
             response.setStatusCode(e.statusCode)
         } catch (e: NoSuchElementException) {
             onError(e)
